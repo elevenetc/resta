@@ -1,4 +1,12 @@
 <resources>
-    <string name="app_name">resta</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="app_name">Resta</string>
+
+    <string name="grant_location">Grant</string>
+    <string name="getting_current_location">Getting current location…</string>
+    <string name="location_is_not_available">Current location is not available</string>
+    <string name="location_access_is_not_granted">Location access is not granted</string>
+    <string name="searching_restaurants">Searching restaurants…</string>
+    <string name="error_getting_restaurants">Error getting restaurants</string>
+    <string name="retry">Retry</string>
+
 </resources>

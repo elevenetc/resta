@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="screen_padding">24dp</dimen>
+
+    <dimen name="base_corner_radius">5dp</dimen>
+
+    <dimen name="bottom_sheet_height">50dp</dimen>
+    <dimen name="bottom_sheet_double_height">100dp</dimen>
+    <dimen name="bottom_sheet_side_margin">@dimen/screen_padding</dimen>
+
+</resources>

@@ -11,3 +11,5 @@
 /build
 /captures
 .externalNativeBuild
+foursquare.api.config
+google.api.config

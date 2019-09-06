@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:tools="http://schemas.android.com/tools"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       tools:parentTag="android.widget.FrameLayout">
+
+    <LinearLayout
+            android:id="@+id/sheetMessage"
+            style="@style/BaseBottomSheetDouble"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/bottom_sheet_height">
+
+        <TextView
+                android:id="@+id/textMessage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|center_vertical"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                tools:text="@string/location_is_not_available"
+                android:textColor="@color/colorPrimaryDark"
+                android:gravity="start" />
+
+        <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnAction"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="@string/retry"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_gravity="center"/>
+    </LinearLayout>
+
+</merge>
