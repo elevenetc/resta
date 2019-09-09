@@ -25,7 +25,8 @@
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
         <activity
-                android:name=".features.restaurants.MainActivity">
+                android:screenOrientation="portrait"
+                android:name=".features.map.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

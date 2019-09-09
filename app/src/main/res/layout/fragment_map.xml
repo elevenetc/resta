@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             app:layout_dodgeInsetEdges="bottom"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+    <com.google.android.gms.maps.MapView
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    <ProgressBar
+            android:id="@+id/progressView"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="top|end"
+            android:layout_marginEnd="@dimen/screen_padding"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="@dimen/screen_padding"/>
+
+    <com.elevenetc.android.resta.features.details.DetailsView
+            android:id="@+id/detailsView"
+            android:layout_gravity="bottom"
+            android:background="#ff0000"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+</FrameLayout>

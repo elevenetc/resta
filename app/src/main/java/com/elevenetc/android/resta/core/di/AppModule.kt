@@ -1,8 +1,8 @@
 package com.elevenetc.android.resta.core.di
 
 import android.content.Context
-import com.elevenetc.android.resta.core.activity.ActivityKeeper
-import com.elevenetc.android.resta.core.activity.ActivityKeeperImpl
+import com.elevenetc.android.resta.core.errors.ErrorMessenger
+import com.elevenetc.android.resta.core.errors.ErrorMessengerImpl
 import com.elevenetc.android.resta.core.location.LocManager
 import com.elevenetc.android.resta.core.location.LocManagerImpl
 import com.elevenetc.android.resta.core.logging.Logger
@@ -13,7 +13,6 @@ import com.elevenetc.android.resta.core.scheduling.Schedulers
 import com.elevenetc.android.resta.core.scheduling.SchedulersImpl
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 
 @Module
 class AppModule(private val appContext: Context) {
@@ -31,8 +30,7 @@ class AppModule(private val appContext: Context) {
     fun locations(inst: LocManagerImpl): LocManager = inst
 
     @Provides
-    @Singleton
-    fun activity(inst: ActivityKeeperImpl): ActivityKeeper = inst
+    fun errors(inst: ErrorMessengerImpl): ErrorMessenger = inst
 
     @Provides
     fun appContext(): Context {

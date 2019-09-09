@@ -7,13 +7,12 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.Settings
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.elevenetc.android.resta.core.RequestCodes.LOCATION_PERMISSION
-import com.elevenetc.android.resta.core.activity.ActivityKeeper
 import javax.inject.Inject
 
 class PermissionsManagerImpl @Inject constructor(
-    private val context: Context,
-    private val activityKeeper: ActivityKeeper
+    private val context: Context
 ) : PermissionsManager {
 
     override fun isLocationGranted(requestCode: Int, permissions: Array<out String>, grantResults: IntArray): Boolean {
@@ -30,23 +29,23 @@ class PermissionsManagerImpl @Inject constructor(
         ) == PackageManager.PERMISSION_GRANTED
     }
 
-    override fun allowedToAksLocPermission(): Boolean {
-        return activityKeeper.get().shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)
+    override fun allowedToAksLocPermission(fragment: Fragment): Boolean {
+        return fragment.shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)
     }
 
-    override fun askLocPermissionDialog() {
-        activityKeeper.get().requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION)
+    override fun askLocPermissionDialog(fragment: Fragment) {
+        fragment.requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION)
     }
 
-    override fun askLocPermissionDialogOrAppSettings() {
-        if (allowedToAksLocPermission()) {
-            askLocPermissionDialog()
+    override fun askLocPermissionDialogOrAppSettings(fragment: Fragment) {
+        if (allowedToAksLocPermission(fragment)) {
+            askLocPermissionDialog(fragment)
         } else {
             val intent = Intent().apply {
                 action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                data = Uri.fromParts("package", activityKeeper.get().packageName, null)
+                data = Uri.fromParts("package", fragment.context!!.packageName, null)
             }
-            activityKeeper.get().startActivity(intent)
+            fragment.startActivity(intent)
         }
     }
 

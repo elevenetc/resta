@@ -9,4 +9,12 @@
     <string name="error_getting_restaurants">Error getting restaurants</string>
     <string name="retry">Retry</string>
 
+    <string name="details_btn_close">Close</string>
+    <string name="details_btn_more">More</string>
+    <string name="details_address">Address</string>
+    <string name="details_category">Category</string>
+    <string name="details_undefined">Undefined</string>
+    <string name="map_error_getting_current_location">Error gettings current location</string>
+    <string name="map_error_getting_restaurants">Unable to get restaurants</string>
+
 </resources>

@@ -2,6 +2,7 @@ package com.elevenetc.android.resta.core
 
 import androidx.fragment.app.Fragment
 import com.elevenetc.android.resta.core.di.AppComponent
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
 open class BaseFragment : Fragment() {
@@ -10,10 +11,10 @@ open class BaseFragment : Fragment() {
      */
     val appComponent: AppComponent by lazy { (context!!.applicationContext as App).appComponent }
 
-    protected var sub: Disposable? = null
+    protected var subs = CompositeDisposable()
 
     override fun onDestroyView() {
-        sub?.dispose()
+        subs.dispose()
         super.onDestroyView()
     }
 }

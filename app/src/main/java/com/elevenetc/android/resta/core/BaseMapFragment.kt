@@ -3,7 +3,7 @@ package com.elevenetc.android.resta.core
 import android.os.Bundle
 import android.view.View
 import com.google.android.gms.maps.GoogleMap
-import kotlinx.android.synthetic.main.fragment_restaurants.*
+import kotlinx.android.synthetic.main.fragment_map.*
 
 open class BaseMapFragment : BaseFragment() {
 

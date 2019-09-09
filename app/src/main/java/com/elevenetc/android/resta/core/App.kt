@@ -1,6 +1,7 @@
 package com.elevenetc.android.resta.core
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import com.elevenetc.android.resta.core.di.AppModule
 import com.elevenetc.android.resta.core.di.DaggerAppComponent
 
