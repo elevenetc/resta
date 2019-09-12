@@ -12,3 +12,7 @@ maps.key=
 ```
 ./gradlew assembleDebug
 ```
+# Possible improvements
+- unit and ui tests
+- better error handling (fs token expiration)
+- clustering
