@@ -5,7 +5,7 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.1"
+    buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId "com.elevenetc.android.resta"
         minSdkVersion 26
@@ -16,7 +16,6 @@ android {
     }
     buildTypes {
 
-        
 
         release {
             minifyEnabled false
@@ -52,23 +51,26 @@ dependencies {
     final verAssertJ = '3.10.0'
     final verPlayServices = '17.0.0'
     final verMockito = '2.12.0'
-    
+    final verLifecycle = "2.2.0"
+
     /**
      * Android
      */
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
-    implementation 'androidx.core:core-ktx:1.2.0-alpha03'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.2.0-beta01'
+    implementation 'androidx.core:core-ktx:1.3.0-rc01'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
-    implementation 'com.google.maps.android:android-maps-utils:0.5+'
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.maps.android:android-maps-utils:0.5'
+    implementation 'com.google.android.material:material:1.1.0'
 
     /**
      * Architecture
      */
     implementation "com.google.dagger:dagger:$verDagger"
     kapt "com.google.dagger:dagger-compiler:$verDagger"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$verLifecycle"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$verLifecycle"
 
     /**
      * Network
@@ -94,13 +96,20 @@ dependencies {
      */
     testImplementation "org.mockito:mockito-core:$verMockito"
     testImplementation "org.assertj:assertj-core:$verAssertJ"
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
+    testImplementation 'junit:junit:4.13'
+    androidTestImplementation 'androidx.test:runner:1.3.0-beta01'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0-beta01'
 }
 
 def getProperties(name) {
+
+    if (!project.rootProject.file(name).exists()) {
+        def errorMessage = name + " file is not found. Read more at https://github.com/elevenetc/resta"
+        throw new FileNotFoundException(errorMessage)
+    }
+
     Properties properties = new Properties()
     properties.load(project.rootProject.file(name).newDataInputStream())
     return properties
 }
+
