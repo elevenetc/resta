@@ -1,4 +1,4 @@
-package com.elevenetc.android.resta.features.rests.vm
+package com.elevenetc.android.resta.features.map.vm
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
@@ -29,10 +29,10 @@ interface ViewModel {
         object NoGrantedLocationAccess : State()
         object LoadingLocation : State()
         data class ErrorLocationLoading(val error: Throwable) : State()
-        data class CurrentLocation(val loc: Loc) : State()
+        data class CurrentLocationReceived(val loc: Loc) : State()
         object Loading : State()
-        data class CachedResult(val data: Set<Restaurant>) : State()
-        data class NetworkResult(val data: Set<Restaurant>) : State()
-        data class LoadingError(val error: Throwable) : State()
+        data class RestsCachedResult(val data: Set<Restaurant>) : State()
+        data class RestsNetworkResult(val data: Set<Restaurant>) : State()
+        data class RestsErrorResult(val error: Throwable) : State()
     }
 }

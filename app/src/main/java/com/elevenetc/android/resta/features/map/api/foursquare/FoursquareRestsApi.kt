@@ -1,9 +1,9 @@
-package com.elevenetc.android.resta.features.rests.api.foursquare
+package com.elevenetc.android.resta.features.map.api.foursquare
 
 import com.elevenetc.android.resta.core.location.MapBounds
 import com.elevenetc.android.resta.core.logging.Logger
 import com.elevenetc.android.resta.core.models.Restaurant
-import com.elevenetc.android.resta.features.rests.api.RestsApi
+import com.elevenetc.android.resta.features.map.api.RestsApi
 import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Named

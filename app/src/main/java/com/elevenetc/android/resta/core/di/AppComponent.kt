@@ -4,8 +4,8 @@ import com.elevenetc.android.resta.core.errors.ErrorMessenger
 import com.elevenetc.android.resta.core.logging.Logger
 import com.elevenetc.android.resta.core.permissions.PermissionsManager
 import com.elevenetc.android.resta.core.scheduling.Schedulers
-import com.elevenetc.android.resta.features.rests.RestsComponent
-import com.elevenetc.android.resta.features.rests.api.foursquare.FoursquareModule
+import com.elevenetc.android.resta.features.map.MapComponent
+import com.elevenetc.android.resta.features.map.api.foursquare.FoursquareModule
 import dagger.Component
 import javax.inject.Singleton
 
@@ -18,5 +18,5 @@ interface AppComponent {
     fun permissions(): PermissionsManager
     fun errors(): ErrorMessenger
 
-    fun restaurants(): RestsComponent
+    fun map(): MapComponent
 }

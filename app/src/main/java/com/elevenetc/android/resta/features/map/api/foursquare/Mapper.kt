@@ -1,4 +1,4 @@
-package com.elevenetc.android.resta.features.rests.api.foursquare
+package com.elevenetc.android.resta.features.map.api.foursquare
 
 import com.elevenetc.android.resta.core.location.Loc
 import com.elevenetc.android.resta.core.models.Restaurant

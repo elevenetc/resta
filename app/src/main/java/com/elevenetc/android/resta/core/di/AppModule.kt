@@ -32,6 +32,7 @@ class AppModule(private val appContext: Context) {
     fun permissions(inst: PermissionsManagerImpl): PermissionsManager = inst
 
     @Provides
+    @Singleton
     fun locations(inst: LocManagerImpl): LocManager = inst
 
     @Provides

@@ -2,7 +2,7 @@ package com.elevenetc.android.resta.core.repository
 
 import com.elevenetc.android.resta.core.cache.RestsCache
 import com.elevenetc.android.resta.core.location.MapBounds
-import com.elevenetc.android.resta.features.rests.api.RestsApi
+import com.elevenetc.android.resta.features.map.api.RestsApi
 import com.elevenetc.android.resta.core.repository.RestsRepository.Result
 import io.reactivex.Observable
 import io.reactivex.Observable.concat

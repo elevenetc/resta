@@ -1,7 +1,7 @@
-package com.elevenetc.android.resta.features.rests.api.foursquare
+package com.elevenetc.android.resta.features.map.api.foursquare
 
 import com.elevenetc.android.resta.BuildConfig
-import com.elevenetc.android.resta.features.rests.api.*
+import com.elevenetc.android.resta.features.map.api.*
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient

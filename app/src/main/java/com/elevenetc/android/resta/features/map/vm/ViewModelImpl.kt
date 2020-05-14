@@ -1,4 +1,4 @@
-package com.elevenetc.android.resta.features.rests.vm
+package com.elevenetc.android.resta.features.map.vm
 
 import androidx.lifecycle.MutableLiveData
 import com.elevenetc.android.resta.core.location.MapBounds
@@ -7,9 +7,9 @@ import com.elevenetc.android.resta.core.permissions.PermissionsManager
 import com.elevenetc.android.resta.core.scheduling.Schedulers
 import com.elevenetc.android.resta.core.usecases.GetCurrentLocation
 import com.elevenetc.android.resta.core.usecases.GetRests
-import com.elevenetc.android.resta.features.rests.vm.ViewModel.Action
-import com.elevenetc.android.resta.features.rests.vm.ViewModel.State
-import com.elevenetc.android.resta.features.rests.vm.ViewModel.State.Idle
+import com.elevenetc.android.resta.features.map.vm.ViewModel.Action
+import com.elevenetc.android.resta.features.map.vm.ViewModel.State
+import com.elevenetc.android.resta.features.map.vm.ViewModel.State.Idle
 import com.elevenetc.android.resta.core.repository.RestsRepository.Result.*
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
@@ -62,13 +62,13 @@ class ViewModelImpl @Inject constructor(
             } else {
                 updateCurrentState(State.NoGrantedLocationAccess)
             }
-        } else if (currentState is State.CurrentLocation && action is Action.GetRests) {
+        } else if (currentState is State.CurrentLocationReceived && action is Action.GetRests) {
             getRestaurants(action.bounds)
-        } else if (currentState is State.CachedResult && action is Action.GetRests) {
+        } else if (currentState is State.RestsCachedResult && action is Action.GetRests) {
             getRestaurants(action.bounds)
-        } else if (currentState is State.NetworkResult && action is Action.GetRests) {
+        } else if (currentState is State.RestsNetworkResult && action is Action.GetRests) {
             getRestaurants(action.bounds)
-        } else if (currentState is State.LoadingError && action is Action.GetRests) {
+        } else if (currentState is State.RestsErrorResult && action is Action.GetRests) {
             getRestaurants(action.bounds)
         } else {
             logger.logD("Unimplemented state. Current state: $currentState. Action: $action")
@@ -85,7 +85,7 @@ class ViewModelImpl @Inject constructor(
                         .subscribeOn(schedulers.background())
                         .observeOn(schedulers.ui())
                         .subscribe({ location ->
-                            updateCurrentState(State.CurrentLocation(location))
+                            updateCurrentState(State.CurrentLocationReceived(location))
                         }, { error ->
                             updateCurrentState(State.ErrorLocationLoading(error))
                         })
@@ -104,18 +104,18 @@ class ViewModelImpl @Inject constructor(
 
                             when (result) {
                                 is Cached -> {
-                                    updateCurrentState(State.CachedResult(result.data))
+                                    updateCurrentState(State.RestsCachedResult(result.data))
                                 }
                                 is Network -> {
-                                    updateCurrentState(State.NetworkResult(result.data))
+                                    updateCurrentState(State.RestsNetworkResult(result.data))
                                 }
                                 is NetworkError -> {
-                                    updateCurrentState(State.LoadingError(result.error))
+                                    updateCurrentState(State.RestsErrorResult(result.error))
                                 }
                             }
 
                         }, {
-                            updateCurrentState(State.LoadingError(it))
+                            updateCurrentState(State.RestsErrorResult(it))
                         })
         )
     }

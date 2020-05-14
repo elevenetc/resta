@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:screenOrientation="portrait"
-            android:name=".features.rests.view.RestsMapActivity">
+            android:name=".features.map.view.MapActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

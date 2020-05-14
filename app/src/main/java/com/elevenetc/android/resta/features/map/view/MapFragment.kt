@@ -1,4 +1,4 @@
-package com.elevenetc.android.resta.features.rests.view
+package com.elevenetc.android.resta.features.map.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,10 +12,10 @@ import com.elevenetc.android.resta.core.BaseMapFragment
 import com.elevenetc.android.resta.core.location.Loc
 import com.elevenetc.android.resta.core.models.Restaurant
 import com.elevenetc.android.resta.core.utils.MapUtils
-import com.elevenetc.android.resta.features.rests.vm.ViewModel
-import com.elevenetc.android.resta.features.rests.vm.ViewModel.Action
-import com.elevenetc.android.resta.features.rests.vm.ViewModel.State
-import com.elevenetc.android.resta.features.rests.vm.ViewModelImpl
+import com.elevenetc.android.resta.features.map.vm.ViewModel
+import com.elevenetc.android.resta.features.map.vm.ViewModel.Action
+import com.elevenetc.android.resta.features.map.vm.ViewModel.State
+import com.elevenetc.android.resta.features.map.vm.ViewModelImpl
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.*
 import com.google.android.material.snackbar.Snackbar
@@ -23,14 +23,11 @@ import kotlinx.android.synthetic.main.fragment_map.*
 import kotlin.collections.set
 
 
-class RestsMapFragment : BaseMapFragment() {
+class MapFragment : BaseMapFragment() {
 
-    private val restsMarkers = mutableMapOf<String, Marker>()
-    private var currentLocation: Loc? = null
+    private val markers = mutableMapOf<String, Marker>()
     private var currentLocationMarker: Marker? = null
-
     private var errorMessage: Snackbar? = null
-
     private val defaultZoom = 16f
     private lateinit var vm: ViewModel
 
@@ -40,7 +37,7 @@ class RestsMapFragment : BaseMapFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val vmFactory = appComponent.restaurants().viewModelFactory()
+        val vmFactory = appComponent.map().viewModelFactory()
         vm = ViewModelProvider(this, vmFactory).get(ViewModelImpl::class.java)
     }
 
@@ -82,7 +79,6 @@ class RestsMapFragment : BaseMapFragment() {
 
     private fun setCurrentLocation(loc: Loc) {
 
-        this.currentLocation = loc
         val latLng = LatLng(loc.lat, loc.lon)
         val cameraPosition = CameraPosition.Builder().target(latLng).zoom(defaultZoom).build()
 
@@ -95,7 +91,7 @@ class RestsMapFragment : BaseMapFragment() {
 
         for (rest in restaurants) {
 
-            if (restsMarkers.containsKey(rest.id)) continue
+            if (markers.containsKey(rest.id)) continue
 
             val loc = LatLng(rest.loc.lat, rest.loc.lon)
             val marker = map.addMarker(
@@ -106,7 +102,7 @@ class RestsMapFragment : BaseMapFragment() {
                             .icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_icon_restaurant))
             )
             marker.tag = rest
-            restsMarkers[rest.id] = marker
+            markers[rest.id] = marker
         }
     }
 
@@ -132,21 +128,21 @@ class RestsMapFragment : BaseMapFragment() {
                     vm.onAction(Action.RequestLocationAccess(this))
                 }
             }
-            is State.CurrentLocation -> {
+            is State.CurrentLocationReceived -> {
                 setCurrentLocation(state.loc)
             }
             is State.Loading -> {
                 errorMessage?.dismiss()
                 progressView.visibility = View.VISIBLE
             }
-            is State.CachedResult -> {
+            is State.RestsCachedResult -> {
                 addRestaurants(state.data)
             }
-            is State.NetworkResult -> {
+            is State.RestsNetworkResult -> {
                 progressView.visibility = View.GONE
                 addRestaurants(state.data)
             }
-            is State.LoadingError -> {
+            is State.RestsErrorResult -> {
                 progressView.visibility = View.GONE
                 showError(
                         R.string.map_error_getting_restaurants,
