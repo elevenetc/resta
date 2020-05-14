@@ -1,4 +1,4 @@
-package com.elevenetc.android.resta.features.map.api
+package com.elevenetc.android.resta.features.rests.api.foursquare
 
 import io.reactivex.Single
 import retrofit2.http.GET

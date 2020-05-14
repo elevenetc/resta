@@ -1,4 +1,4 @@
-package com.elevenetc.android.resta.features.map.api
+package com.elevenetc.android.resta.features.rests.api.foursquare
 
 data class SearchResponse(val response: Response)
 data class Response(val venues: List<FSVenue>)

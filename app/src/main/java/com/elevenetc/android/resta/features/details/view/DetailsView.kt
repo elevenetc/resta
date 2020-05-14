@@ -1,4 +1,4 @@
-package com.elevenetc.android.resta.features.details
+package com.elevenetc.android.resta.features.details.view
 
 import android.content.Context
 import android.util.AttributeSet
@@ -10,7 +10,7 @@ import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.elevenetc.android.resta.R
 import com.elevenetc.android.resta.core.utils.OnBackKeyListener
 import com.elevenetc.android.resta.core.utils.OnLayoutListener
-import com.elevenetc.android.resta.features.map.Restaurant
+import com.elevenetc.android.resta.core.models.Restaurant
 import kotlinx.android.synthetic.main.view_details.view.*
 
 class DetailsView : FrameLayout {
@@ -100,7 +100,7 @@ class DetailsView : FrameLayout {
             .translationY(maxHeight - resources.getDimension(R.dimen.bottom_sheet_height)).start()
     }
 
-    fun setHidden() {
+    fun hide() {
 
         if (state == State.HIDDEN) return
 

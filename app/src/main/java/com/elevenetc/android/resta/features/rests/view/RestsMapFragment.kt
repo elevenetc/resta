@@ -1,4 +1,4 @@
-package com.elevenetc.android.resta.features.restaurants
+package com.elevenetc.android.resta.features.rests.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,8 +12,10 @@ import com.elevenetc.android.resta.core.BaseMapFragment
 import com.elevenetc.android.resta.core.location.Loc
 import com.elevenetc.android.resta.core.models.Restaurant
 import com.elevenetc.android.resta.core.utils.MapUtils
-import com.elevenetc.android.resta.features.restaurants.ViewModel.Action
-import com.elevenetc.android.resta.features.restaurants.ViewModel.State
+import com.elevenetc.android.resta.features.rests.vm.ViewModel
+import com.elevenetc.android.resta.features.rests.vm.ViewModel.Action
+import com.elevenetc.android.resta.features.rests.vm.ViewModel.State
+import com.elevenetc.android.resta.features.rests.vm.ViewModelImpl
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.*
 import com.google.android.material.snackbar.Snackbar
@@ -36,10 +38,18 @@ class RestsMapFragment : BaseMapFragment() {
         return inflater.inflate(R.layout.fragment_map, container, false)
     }
 
-    override fun onMapReady() {
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         val vmFactory = appComponent.restaurants().viewModelFactory()
         vm = ViewModelProvider(this, vmFactory).get(ViewModelImpl::class.java)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        vm.onAction(Action.VerifyGrantedLocationAccess)
+    }
+
+    override fun onMapReady() {
 
         map.setOnMarkerClickListener { m ->
             if (m != currentLocationMarker) openDetails(m.tag as Restaurant)
@@ -100,13 +110,6 @@ class RestsMapFragment : BaseMapFragment() {
         }
     }
 
-    private fun showNoPermissionError() {
-
-        showError(R.string.location_access_is_not_granted, R.string.grant_location) {
-            vm.onAction(Action.RequestCurrentLocation(this))
-        }
-    }
-
     private fun showError(@StringRes title: Int, @StringRes action: Int, retry: () -> Unit) {
         detailsView.hide()
         errorMessage?.dismiss()
@@ -125,6 +128,9 @@ class RestsMapFragment : BaseMapFragment() {
             }
             is State.NoGrantedLocationAccess -> {
                 progressView.visibility = View.GONE
+                showError(R.string.location_access_is_not_granted, R.string.grant_location) {
+                    vm.onAction(Action.RequestLocationAccess(this))
+                }
             }
             is State.CurrentLocation -> {
                 setCurrentLocation(state.loc)

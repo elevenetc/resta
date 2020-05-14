@@ -1,4 +1,4 @@
-package com.elevenetc.android.resta.features.restaurants
+package com.elevenetc.android.resta.features.rests.vm
 
 import androidx.lifecycle.MutableLiveData
 import com.elevenetc.android.resta.core.location.MapBounds
@@ -7,19 +7,19 @@ import com.elevenetc.android.resta.core.permissions.PermissionsManager
 import com.elevenetc.android.resta.core.scheduling.Schedulers
 import com.elevenetc.android.resta.core.usecases.GetCurrentLocation
 import com.elevenetc.android.resta.core.usecases.GetRests
-import com.elevenetc.android.resta.features.restaurants.ViewModel.Action
-import com.elevenetc.android.resta.features.restaurants.ViewModel.State
-import com.elevenetc.android.resta.features.restaurants.ViewModel.State.Idle
-import com.elevenetc.android.resta.features.restaurants.repository.RestsRepository.Result.*
+import com.elevenetc.android.resta.features.rests.vm.ViewModel.Action
+import com.elevenetc.android.resta.features.rests.vm.ViewModel.State
+import com.elevenetc.android.resta.features.rests.vm.ViewModel.State.Idle
+import com.elevenetc.android.resta.core.repository.RestsRepository.Result.*
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class ViewModelImpl @Inject constructor(
-    private val schedulers: Schedulers,
-    private val getCurrentLocationCase: GetCurrentLocation,
-    private val getRestsCase: GetRests,
-    private val permissions: PermissionsManager,
-    private val logger: Logger
+        private val schedulers: Schedulers,
+        private val getCurrentLocationCase: GetCurrentLocation,
+        private val getRestsCase: GetRests,
+        private val permissions: PermissionsManager,
+        private val logger: Logger
 ) : ViewModel, androidx.lifecycle.ViewModel() {
 
     override val state = MutableLiveData<State>(Idle)
@@ -42,7 +42,7 @@ class ViewModelImpl @Inject constructor(
             } else {
                 updateCurrentState(State.NoGrantedLocationAccess)
             }
-        } else if (currentState == State.NoGrantedLocationAccess && action is Action.RequestCurrentLocation) {
+        } else if (currentState == State.NoGrantedLocationAccess && action is Action.RequestLocationAccess) {
             if (permissions.allowedToAksLocPermission(action.fragment)) {
                 permissions.requestLocationPermissionDialog(action.fragment)
             } else {
@@ -53,7 +53,14 @@ class ViewModelImpl @Inject constructor(
                 updateCurrentState(State.LoadingLocation)
                 getCurrentLocation()
             } else {
-                //TODO: add error state
+                updateCurrentState(State.NoGrantedLocationAccess)
+            }
+        } else if (currentState is State.NoGrantedLocationAccess && action is Action.VerifyGrantedLocationAccess) {
+            if (permissions.isLocationGranted()) {
+                updateCurrentState(State.LoadingLocation)
+                getCurrentLocation()
+            } else {
+                updateCurrentState(State.NoGrantedLocationAccess)
             }
         } else if (currentState is State.CurrentLocation && action is Action.GetRests) {
             getRestaurants(action.bounds)
@@ -74,14 +81,14 @@ class ViewModelImpl @Inject constructor(
 
     private fun getCurrentLocation() {
         subs.add(
-            getCurrentLocationCase.get()
-                .subscribeOn(schedulers.background())
-                .observeOn(schedulers.ui())
-                .subscribe({ location ->
-                    updateCurrentState(State.CurrentLocation(location))
-                }, { error ->
-                    updateCurrentState(State.ErrorLocationLoading(error))
-                })
+                getCurrentLocationCase.get()
+                        .subscribeOn(schedulers.background())
+                        .observeOn(schedulers.ui())
+                        .subscribe({ location ->
+                            updateCurrentState(State.CurrentLocation(location))
+                        }, { error ->
+                            updateCurrentState(State.ErrorLocationLoading(error))
+                        })
         )
     }
 
@@ -90,26 +97,26 @@ class ViewModelImpl @Inject constructor(
         updateCurrentState(State.Loading)
 
         subs.add(
-            getRestsCase.get(bounds)
-                .subscribeOn(schedulers.background())
-                .observeOn(schedulers.ui())
-                .subscribe({ result ->
+                getRestsCase.get(bounds)
+                        .subscribeOn(schedulers.background())
+                        .observeOn(schedulers.ui())
+                        .subscribe({ result ->
 
-                    when (result) {
-                        is Cached -> {
-                            updateCurrentState(State.CachedResult(result.data))
-                        }
-                        is Network -> {
-                            updateCurrentState(State.NetworkResult(result.data))
-                        }
-                        is NetworkError -> {
-                            updateCurrentState(State.LoadingError(result.error))
-                        }
-                    }
+                            when (result) {
+                                is Cached -> {
+                                    updateCurrentState(State.CachedResult(result.data))
+                                }
+                                is Network -> {
+                                    updateCurrentState(State.NetworkResult(result.data))
+                                }
+                                is NetworkError -> {
+                                    updateCurrentState(State.LoadingError(result.error))
+                                }
+                            }
 
-                }, {
-                    updateCurrentState(State.LoadingError(it))
-                })
+                        }, {
+                            updateCurrentState(State.LoadingError(it))
+                        })
         )
     }
 }

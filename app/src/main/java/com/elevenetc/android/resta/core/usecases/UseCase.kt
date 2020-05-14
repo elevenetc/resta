@@ -1,5 +1,3 @@
 package com.elevenetc.android.resta.core.usecases
 
-interface UseCase {
-
-}
+interface UseCase

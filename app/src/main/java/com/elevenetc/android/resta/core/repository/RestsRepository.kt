@@ -1,4 +1,4 @@
-package com.elevenetc.android.resta.features.restaurants.repository
+package com.elevenetc.android.resta.core.repository
 
 import com.elevenetc.android.resta.core.location.MapBounds
 import com.elevenetc.android.resta.core.models.Restaurant

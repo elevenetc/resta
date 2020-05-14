@@ -1,11 +1,11 @@
-package com.elevenetc.android.resta.features.map
+package com.elevenetc.android.resta.features.rests.view
 
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.elevenetc.android.resta.R
-import com.elevenetc.android.resta.core.BaseActivity
 
-class MainActivity : BaseActivity() {
+class RestsMapActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -15,9 +15,9 @@ class MainActivity : BaseActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager
-                .beginTransaction()
-                .add(R.id.root_container, MapFragment())
-                .commit()
+                    .beginTransaction()
+                    .add(R.id.root_container, RestsMapFragment())
+                    .commit()
         }
     }
 }

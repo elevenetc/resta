@@ -1,16 +1,16 @@
-package com.elevenetc.android.resta.features.restaurants.repository
+package com.elevenetc.android.resta.core.repository
 
-import com.elevenetc.android.resta.core.cache.RestaurantsCache
+import com.elevenetc.android.resta.core.cache.RestsCache
 import com.elevenetc.android.resta.core.location.MapBounds
-import com.elevenetc.android.resta.features.restaurants.RestaurantsApi
-import com.elevenetc.android.resta.features.restaurants.repository.RestsRepository.Result
+import com.elevenetc.android.resta.features.rests.api.RestsApi
+import com.elevenetc.android.resta.core.repository.RestsRepository.Result
 import io.reactivex.Observable
 import io.reactivex.Observable.concat
 import javax.inject.Inject
 
 class RestsRepositoryImpl @Inject constructor(
-    private val api: RestaurantsApi,
-    private val cache: RestaurantsCache
+        private val api: RestsApi,
+        private val cache: RestsCache
 ) : RestsRepository {
     override fun getRestaurants(bounds: MapBounds): Observable<out Result> {
         return concat(getCached(bounds), loadAndCache(bounds))

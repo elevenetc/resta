@@ -1,4 +1,4 @@
-package com.elevenetc.android.resta.features.restaurants
+package com.elevenetc.android.resta.features.rests.vm
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
@@ -13,7 +13,8 @@ interface ViewModel {
     fun onAction(action: Action)
 
     sealed class Action {
-        data class RequestCurrentLocation(val fragment: Fragment) : Action()
+        object VerifyGrantedLocationAccess : Action()
+        data class RequestLocationAccess(val fragment: Fragment) : Action()
         object GetCurrentLocation : Action()
         data class GetRests(val bounds: MapBounds) : Action()
         data class PermissionGranted(

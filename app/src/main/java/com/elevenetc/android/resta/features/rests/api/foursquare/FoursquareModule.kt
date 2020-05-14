@@ -1,7 +1,7 @@
-package com.elevenetc.android.resta.features.map.api
+package com.elevenetc.android.resta.features.rests.api.foursquare
 
 import com.elevenetc.android.resta.BuildConfig
-import com.elevenetc.android.resta.features.map.RestaurantsProvider
+import com.elevenetc.android.resta.features.rests.api.*
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -10,18 +10,22 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
 
+/**
+ * Provides [RestsApi]
+ * And defines required dependencies for Foursquare implementation
+ */
 @Module
 class FoursquareModule {
 
     @Provides
-    fun venuesProvider(inst: FoursquareRestaurantsProvider): RestaurantsProvider = inst
+    fun venuesProvider(inst: FoursquareRestsApi): RestsApi = inst
 
     @Provides
     fun api(
-        @Named(Names.CLIENT_ID) clientId: String,
-        @Named(Names.CLIENT_SECRET) clientSecret: String,
-        @Named(Names.ENDPOINT) endpoint: String,
-        @Named(Names.API_VER) apiVer: String
+            @Named(Names.CLIENT_ID) clientId: String,
+            @Named(Names.CLIENT_SECRET) clientSecret: String,
+            @Named(Names.ENDPOINT) endpoint: String,
+            @Named(Names.API_VER) apiVer: String
     ): FoursquareApi {
 
         val client = OkHttpClient.Builder()
@@ -36,7 +40,7 @@ class FoursquareModule {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
 
-        return retrofit.create<FoursquareApi>(FoursquareApi::class.java)
+        return retrofit.create(FoursquareApi::class.java)
     }
 
     @Provides

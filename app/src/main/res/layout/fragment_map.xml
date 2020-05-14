@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
-             app:layout_dodgeInsetEdges="bottom"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                     xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                     app:layout_dodgeInsetEdges="bottom"
+                                                     android:layout_width="match_parent"
+                                                     android:layout_height="match_parent">
 
     <com.google.android.gms.maps.MapView
             android:id="@+id/mapView"
@@ -19,11 +19,10 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="@dimen/screen_padding"/>
 
-    <com.elevenetc.android.resta.features.details.DetailsView
+    <com.elevenetc.android.resta.features.details.view.DetailsView
             android:id="@+id/detailsView"
             android:layout_gravity="bottom"
             android:background="#ff0000"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-
-</FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

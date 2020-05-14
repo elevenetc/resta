@@ -13,11 +13,9 @@ class LocManagerImpl @Inject constructor(private val context: Context) : LocMana
 
         val locProvider = LocationServices.getFusedLocationProviderClient(context)
 
-        return Single.fromObservable<Loc> { observer ->
+        return Single.fromObservable { observer ->
 
             locProvider.lastLocation.addOnSuccessListener { loc ->
-
-                //TODO: add more advanced location check: staled and not accurate
 
                 if (loc == null) {
                     requestSingleUpdate(locProvider, observer)

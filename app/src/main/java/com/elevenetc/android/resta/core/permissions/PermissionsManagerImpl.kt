@@ -33,20 +33,16 @@ class PermissionsManagerImpl @Inject constructor(
         return fragment.shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)
     }
 
-    override fun askLocPermissionDialog(fragment: Fragment) {
+    override fun requestLocationPermissionDialog(fragment: Fragment) {
         fragment.requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION)
     }
 
-    override fun askLocPermissionDialogOrAppSettings(fragment: Fragment) {
-        if (allowedToAksLocPermission(fragment)) {
-            askLocPermissionDialog(fragment)
-        } else {
-            val intent = Intent().apply {
-                action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                data = Uri.fromParts("package", fragment.context!!.packageName, null)
-            }
-            fragment.startActivity(intent)
+    override fun requestPersmissionSettings(fragment: Fragment) {
+        val intent = Intent().apply {
+            action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+            data = Uri.fromParts("package", fragment.context!!.packageName, null)
         }
+        fragment.startActivity(intent)
     }
 
     private fun isPermissionGranted(

@@ -1,9 +1,9 @@
 package com.elevenetc.android.resta.core
 
 import androidx.fragment.app.Fragment
+import com.elevenetc.android.resta.App
 import com.elevenetc.android.resta.core.di.AppComponent
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 
 open class BaseFragment : Fragment() {
     /**
@@ -16,5 +16,9 @@ open class BaseFragment : Fragment() {
     override fun onDestroyView() {
         subs.dispose()
         super.onDestroyView()
+    }
+
+    fun showRetry() {
+
     }
 }

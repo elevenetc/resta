@@ -1,18 +1,16 @@
-package com.elevenetc.android.resta.features.map.api
+package com.elevenetc.android.resta.features.rests.api.foursquare
 
 import okhttp3.Interceptor
 
-internal class AuthInterceptor(
-        private val clientId: String,
-        private val clientSecret: String
+internal class VerInterceptor(
+        private val version: String
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
         val original = chain.request()
         val originalHttpUrl = original.url()
 
         val url = originalHttpUrl.newBuilder()
-                .addQueryParameter("client_id", clientId)
-                .addQueryParameter("client_secret", clientSecret)
+                .addQueryParameter("v", version)
                 .build()
 
         return chain.proceed(original.newBuilder().url(url).build())

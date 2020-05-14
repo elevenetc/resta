@@ -9,7 +9,7 @@ import javax.inject.Inject
  * Simplified in-memory implementation.
  * Thread safe.
  */
-class RestaurantsCacheImpl @Inject constructor() : RestaurantsCache {
+class RestsCacheImpl @Inject constructor() : RestsCache {
 
     private val cache = mutableSetOf<Restaurant>()
 

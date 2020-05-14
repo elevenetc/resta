@@ -7,7 +7,7 @@ import io.reactivex.Single
 /**
  * Thread safe.
  */
-interface RestaurantsCache {
+interface RestsCache {
     fun store(restaurants: Set<Restaurant>): Single<Set<Restaurant>>
     fun get(bounds: MapBounds): Single<Set<Restaurant>>
 }
